@@ -1,6 +1,12 @@
 package com.duviri.sismus.entity.enums;
 
+import java.util.stream.Stream;
+
 public enum PermissaoEnum {
     COMUM,
-    ADMINISTADOR;
+    ADMINISTRADOR;
+
+    public static PermissaoEnum findByName(String name) {
+        return Stream.of(PermissaoEnum.values()).filter(p -> p.name().equalsIgnoreCase(name.toUpperCase())).findFirst().get();
+    }
 }

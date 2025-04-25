@@ -4,7 +4,7 @@ import com.duviri.sismus.entity.Usuario;
 import com.duviri.sismus.entity.UsuarioBuilder;
 import com.duviri.sismus.entity.UsuarioFactory;
 
-import static com.duviri.sismus.entity.enums.PermissaoEnum.ADMINISTADOR;
+import static com.duviri.sismus.entity.enums.PermissaoEnum.ADMINISTRADOR;
 
 public class UsuarioAdministradorFactory extends UsuarioFactory {
     @Override
@@ -13,7 +13,7 @@ public class UsuarioAdministradorFactory extends UsuarioFactory {
             throw new IllegalArgumentException();
         }
         Usuario usuario = builder.build();
-        usuario.setPermissao(ADMINISTADOR);
+        usuario.setPermissao(ADMINISTRADOR);
         return usuario;
     }
 }
