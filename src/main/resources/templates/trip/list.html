@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Viagens</title>
+</head>
+
+<body>
+  <header class="bg-dark text-white px-4 py-2 row row-cols-2 fs-5">
+    <h1>Viagens</h1>
+
+  </header>
+
+  <main class="container mt-5">
+    <h2>Lista de Viagens</h2>
+
+    <a th:href="@{/}" class="font-weight-bold text-decoration-none mb-3">
+      <p>
+        Voltar
+      </p>
+    </a>
+
+    <form th:action="@{/trip/listbyid/}" method="GET" class="mb-3">
+      <div class="input-group">
+        <input type="number" name="id" class="form-control" placeholder="Pesquisar Viagem"
+          aria-label="Pesquisar usuário">
+        <input type="hidden" name="criador" th:value="${criador.id}">
+        <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+      </div>
+    </form>
+
+    <div class="d-flex justify-content-between">
+      <form th:action="@{/trip/listbyuser/{id}(id=${criador.id})}">
+        <input type="submit" value="Consultar Todos" class="btn btn-primary mb-3">
+      </form>
+
+      <form th:action="@{/trip/create/{id}(id=${criador.id})}">
+        <input type="submit" value="Cadastrar" class="btn btn-success mb-3">
+      </form>
+    </div>
+
+    <div>
+      <p th:if="${#lists.isEmpty(viagens)}" class="text-center">Nenhuma Viagem Cadastrada.</p>
+
+      <table th:unless="${#lists.isEmpty(viagens)}" class="table border text-center">
+        <tr>
+          <th>#</th>
+          <th>Titulo</th>
+          <th>Origem</th>
+          <th>Destino</th>
+          <th>Valor</th>
+          <th>Disponivel</th>
+          <th>Passagens Totais</th>
+          <th>Passagens Disponiveis</th>
+          <th colspan="2">Ações</th>
+        </tr>
+        </thead>
+        <tr th:each="viagem: ${viagens}">
+          <td th:text="${viagem.id}"></td>
+          <td th:text="${viagem.titulo}"></td>
+          <td th:text="${viagem.origem}"></td>
+          <td th:text="${viagem.destino}"></td>
+          <td th:text="${viagem.valor}"></td>
+          <td th:text="${viagem.disponivel} ? 'Sim' : 'Não'"></td>
+          <td th:text="${viagem.passagensTotais}"></td>
+          <td th:text="${viagem.passagensDisponiveis}"></td>
+          <td>
+            <a th:href="@{/trip/update/{id}(id=${viagem.id})}" class="btn btn-warning">Editar</a>
+          </td>
+          <td>
+            <a onclick="return confirmRemove()" th:href="@{/trip/delete/{id}(id=${viagem.id})}"
+              class="btn btn-warning">Deletar</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script>
+    function confirmRemove() {
+      return confirm("Deseja remover este item?")
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Cadastro de Viagens</title>
+</head>
+
+<body>
+  <header class="bg-dark text-white px-4 py-2 row row-cols-2 fs-5">
+    <h1>Reservas</h1>
+
+  </header>
+  <main class="container d-flex flex-column justify-content-center align-items-center">
+    <div class="w-50 mt-4 border rounded p-4">
+      <h2>Cadastro</h2>
+      
+      <a th:href="@{/reservation/listbyuser/{id}(id=${usuario.id})}" class="font-weight-bold text-decoration-none mb-3">
+        <p>
+          Voltar
+        </p>
+      </a>
+      
+      <form class="row row-cols-3 gap-3" th:action="@{/reservation/create}" method="POST">
+        <div>
+          <p th:if="${#lists.isEmpty(viagens)}" class="w-100 d-block text-center">Nenhuma Viagem Cadastrada.</p>
+
+          <table th:unless="${#lists.isEmpty(viagens)}" class="table border text-center">
+            <tr>
+              <th>#</th>
+              <th>Titulo</th>
+              <th>Origem</th>
+              <th>Destino</th>
+              <th>Valor</th>
+              <th>Passagens Disponiveis</th>
+              <th>Criador</th>
+            </tr>
+
+            <tr th:each="viagem: ${viagens}">
+              <td>
+                <input required type="radio" name="viagem" th:value="${viagem.id}">
+              </td>
+              <td th:text="${viagem.titulo}"></td>
+              <td th:text="${viagem.origem}"></td>
+              <td th:text="${viagem.destino}"></td>
+              <td th:text="${viagem.valor}"></td>
+              <td th:text="${viagem.passagensDisponiveis}"></td>
+              <td th:text="${viagem.criador.nome}"></td>
+            </tr>
+
+          </table>
+
+          <input type="hidden" name="usuario" th:value="${usuario.id}">
+          <button type="submit" class="btn btn-success" name="op">
+            Reservar
+          </button>
+        </div>
+        <div>
+
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
